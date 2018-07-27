@@ -1,12 +1,12 @@
 <template>
-  <div class="home">
-<h1>Premier League Live Scores:</h1>
+  <div class="liveScores">
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home',
+  name: 'LiveScores',
   data () {
     return {
 
