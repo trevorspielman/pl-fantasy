@@ -1,4 +1,4 @@
-# pl-fantasy
+# public
 
 > A Vue.js project
 
