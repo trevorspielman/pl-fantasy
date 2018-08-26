@@ -15,7 +15,7 @@
                   Pages
                 </a>
                 <div class="dropdown-menu">
-                  <router-link :to="{name: 'LiveScores'}">
+                  <router-link :to="{name: 'LiveScores'}">cd
                     <a class="dropdown-item">Today's Games</a>
                   </router-link>
                   <router-link :to="{name: 'fantasy'}">

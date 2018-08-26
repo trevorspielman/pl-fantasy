@@ -9,7 +9,7 @@ import swal from 'sweetalert2'
 var production = !window.location.host.includes('localhost')
 var baseUrl = production ? '//brewbros.herokuapp.com/' : '//localhost:3000/'
 
-let liveScores = axios.create({
+let matchData = axios.create({
     baseURL: "https://api.football-data.org/v2/",
     timeout: 30000,
 })
@@ -38,6 +38,7 @@ export default new vuex.Store({
         competitions: [],
         plTeams: [],
         date: Date.now,
+        todayMatches: [],
     },
     mutations: {
         updateUser(state, payload) {
@@ -52,10 +53,14 @@ export default new vuex.Store({
         setTeams(state, payload) {
             state.plTeams = payload;
         },
+        todayMatches(state, payload){
+            state.todayMatches = payload;
+            console.log(state.todayMatches)
+        }
     },
     actions: {
         getCompetitions({ commit, dispatch, state }, payload) {
-            liveScores.get("competitions")
+            matchData.get("competitions")
                 .then(res => {
                     commit('setCompetitions', res.data.competitions)
                 })
@@ -64,13 +69,23 @@ export default new vuex.Store({
                 })
         },
         getTeams({ commit, dispatch, state }, payload) {
-            liveScores.get("competitions/2021/teams")
+            matchData.get("competitions/2021/teams")
                 .then(res => {
                     commit('setTeams', res.data.teams)
                 })
                 .catch(err => {
                     console.error(err)
                 })
+        },
+        getCurrentMatchDay({commit, dispatch,state }, payload){
+            matchData.get("competitions/2021/matches?dateFrom=" + payload.todayDate + "&dateTo=" + payload.tomorrowDate)
+            .then(res =>{
+                console.log(res.data)
+                commit('todayMatches', res.data.matches)
+            })
+            .catch(err => {
+                console.error(err)
+            })
         },
         //region user and login actions
         createUser({ commit, dispatch, state }, payload) {
